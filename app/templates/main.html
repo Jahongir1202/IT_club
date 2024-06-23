@@ -1,0 +1,19 @@
+{% load static %}  <!-- Don't forget to load static files -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Registration Form</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<div class="container">
+    <div class="form-container">
+        <h1>Welcome to UNG-IT Club</h1>
+    </div>
+    <a href="{% url 'start_quiz' %}">Take the quiz again</a>
+
+</div>
+
+</body>
+</html>

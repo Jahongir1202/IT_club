@@ -1,0 +1,320 @@
+{% load static %}  
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login Form</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.scss' %}">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:600" rel="stylesheet">
+
+
+</head>
+<body>
+
+
+
+    <header>
+        <a href="#" class="logo-link">
+            <img src="{% static 'images/it-club-logo.png' %}" alt="Logo" class="logo">
+        </a>
+    </header>
+    
+ 
+    
+    <div class="spotlight-container">
+        <img id="spotlight-image" src="{% static 'images/tech.jpg' %}" alt="Tech Image">
+    </div>
+ 
+
+    <div class="main-container">
+
+        <div class="container">
+            <p>UNG IT Club <span class="typed-text"></span><span class="cursor">&nbsp;</span></p>
+        </div> 
+        
+        <div class="centered-form">
+            <div class="form-container">
+
+                <form id="myForm" action="/generate-code/">
+                    <div id="phoneInputContainer"> <!-- This is the container that will be hidden -->
+                        <input type="text" id="phoneInput" name="phone" placeholder="Telefon raqamingizni kiriting">
+                        <button type="button" onclick="requestSMSCode()">Yuborish</button>
+                    </div>
+                    <div id="codeInputContainer" style="display: none;">
+                        <input type="text" maxlength="1" oninput="moveFocus(1, this)" autofocus>
+                        <input type="text" maxlength="1" oninput="moveFocus(2, this)">
+                        <input type="text" maxlength="1" oninput="moveFocus(3, this)">
+                        <input type="text" maxlength="1" oninput="moveFocus(4, this)">
+                        <input type="text" maxlength="1" oninput="moveFocus(5, this)">
+                        <input type="text" maxlength="1" name="code" oninput="moveFocus(6, this)">
+                        <button type="submit">Kirish</button>
+                    </div>
+                </form>
+                
+
+
+                <a href="{% url 'register' %}" class="href">
+                    Ro'yxatdan o'tish
+                </a>
+
+                <div id="message-container"></div> <!-- Container for messages -->
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+
+        //Image parallax effect
+            document.addEventListener('DOMContentLoaded', function() {
+            const img = document.getElementById('spotlight-image');
+        
+            document.addEventListener('mousemove', function(e) {
+                const { clientX, clientY } = e;
+                const screenWidth = window.innerWidth;
+                const screenHeight = window.innerHeight;
+        
+                const moveX = (clientX - screenWidth / 2) * 0.05; // Reduced movement
+                const moveY = (clientY - screenHeight / 2) * 0.05;
+                img.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.1)`;
+        
+            });
+        });
+        
+        
+        
+        //Auto typing text function
+        const typedTextSpan = document.querySelector(".typed-text");
+        const cursorSpan = document.querySelector(".cursor");
+        
+        const textArray = ["- yangi g'oyalar", "- yangi loyihalar", "- yangi jamoa", "ga hush kelibsiz!"];
+        const typingDelay = 200;
+        const erasingDelay = 100;
+        const newTextDelay = 2000; // Delay between current and next text
+        let textArrayIndex = 0;
+        let charIndex = 0;
+        
+        function type() {
+          if (charIndex < textArray[textArrayIndex].length) {
+            if(!cursorSpan.classList.contains("typing")) cursorSpan.classList.add("typing");
+            typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
+            charIndex++;
+            setTimeout(type, typingDelay);
+          } 
+          else {
+            cursorSpan.classList.remove("typing");
+              setTimeout(erase, newTextDelay);
+          }
+        }
+        
+        function erase() {
+            if (charIndex > 0) {
+            if(!cursorSpan.classList.contains("typing")) cursorSpan.classList.add("typing");
+            typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex-1);
+            charIndex--;
+            setTimeout(erase, erasingDelay);
+          } 
+          else {
+            cursorSpan.classList.remove("typing");
+            textArrayIndex++;
+            if(textArrayIndex>=textArray.length) textArrayIndex=0;
+            setTimeout(type, typingDelay + 1100);
+          }
+        }
+        
+        document.addEventListener("DOMContentLoaded", function() { // On DOM Load initiate the effect
+          if(textArray.length) setTimeout(type, newTextDelay + 250);
+        });
+        
+        
+        
+        //Phone number check function
+        const phoneInput = document.getElementById('phoneInput');
+        
+        phoneInput.addEventListener('input', (event) => {
+            let input = event.target.value.replace(/\D/g, ''); // Remove all non-digit characters
+            let formattedInput = '';
+        
+            // Add spaces after 2 digits, then after 3 digits, then after 2 digits
+            if (input.length > 2) {
+                formattedInput += input.substring(0, 2) + ' ';
+                input = input.substring(2);
+            }
+            if (input.length > 3) {
+                formattedInput += input.substring(0, 3) + ' ';
+                input = input.substring(3);
+            }
+            if (input.length > 2) {
+                formattedInput += input.substring(0, 2) + ' ';
+                input = input.substring(2);
+            }
+            formattedInput += input; // Append the rest of the input
+        
+            event.target.value = formattedInput.substring(0, 12); // Limit to 12 characters (9 digits plus 3 spaces)
+        });
+        
+        
+        
+        
+        
+        
+        //Pop up messages function
+        document.getElementById('myForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+        
+            const formData = new FormData(this);
+            const messageContainer = document.getElementById('message-container');
+        
+
+            if (messageContainer) {
+                messageContainer.innerHTML = `<p class="error message">${data.error}</p>`;
+                messageContainer.style.display = 'block';
+            } else {
+                console.error('messageContainer elementi topilmadi');
+            }
+
+
+        
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                let messageClass = data.success ? 'success' : 'error';
+                messageContainer.innerHTML = `<p class="${messageClass} message">${data.message}</p>`;
+                messageContainer.style.display = 'block';
+                if (data.success) {
+                    document.getElementById('myForm').style.display = 'none';
+                }
+        
+            })
+            .catch(error => {
+                console.error('Error during form submission:', error);
+                messageContainer.innerHTML = `<p class="error message">An error occurred while submitting the form.</p>`;
+                messageContainer.style.display = 'block';
+        
+        
+            });
+        });
+        
+        
+        
+    
+        
+    function requestSMSCode() {
+    const phoneInputContainer = document.getElementById('phoneInputContainer');
+    const messageContainer = document.getElementById('message-container');
+    const phone = document.getElementById('phoneInput').value;
+
+    if (!phoneInputContainer) {
+        console.error('phoneInputContainer element is not found in the DOM');
+        return;
+    }
+
+    fetch('/generate-code/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: JSON.stringify({ phone: phone })
+    })
+    .then(response => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.json();
+    })
+    .then(data => {
+        if (data.error) {
+            messageContainer.innerHTML = `<p class="error message">${data.error}</p>`;
+            messageContainer.style.display = 'block';
+        } else {
+            phoneInputContainer.style.display = 'none';
+            document.getElementById('codeInputContainer').style.display = 'block';
+            messageContainer.innerHTML = `<p class="success message">${data.message}</p>`;
+            messageContainer.style.display = 'block';
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        messageContainer.innerHTML = `<p class="error message">An error occurred while processing your request.</p>`;
+        messageContainer.style.display = 'block';
+    });
+}
+
+        
+
+
+
+        
+        
+        
+
+        
+        
+        
+        
+        function moveFocus(nextInputIndex, element) {
+            if (element.value.length === 1) {
+                const nextInput = document.querySelector(`input[type='text']:nth-child(${nextInputIndex + 1})`);
+                if (nextInput) {
+                    nextInput.focus();
+                }
+            }
+        }
+        
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }   
+            }
+            return cookieValue;
+        }
+        
+        const csrftoken = getCookie('csrftoken');
+        
+        
+        
+        
+        
+        
+        
+        </script>
+        
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

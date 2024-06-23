@@ -1,0 +1,224 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f4f4f4;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .question {
+            display: none;
+            margin-bottom: 20px;
+        }
+        .question label {
+            display: block;
+            margin: 5px 0;
+        }
+        #quiz-controls {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body> -->
+    {% load static %}  
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login Form</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:600" rel="stylesheet">
+
+
+</head>
+<body>
+
+
+
+    <header>
+        <a href="#" class="logo-link">
+            <img src="{% static 'images/it-club-logo.png' %}" alt="Logo" class="logo">
+        </a>
+    </header>
+    
+ 
+    
+    <div class="spotlight-container">
+        <img id="spotlight-image" src="{% static 'images/tech.jpg' %}" alt="Tech Image">
+    </div>
+    <div id="quiz">
+        <form style="background-color: #00556b; width: 500px; height: 300px; margin: auto; padding: 30px ; border-radius: 10px; position: relative; bottom: 60px;" id="quiz-form" action="{% url 'submit_quiz' %}" method="post">
+            {% csrf_token %}
+            {% for question in questions %}
+                <div class="question">
+                    <h2 style="position: relative; text-align: center; margin: 0px 0px;">{{ question.question_text }}</h2>
+                    {% if question.question_type == 'choice' %}
+                        {% for key, value in question.choices.items %}
+                        <div style="position: relative; display: inline-block; left: 30px;  background-color:#008494;height: 30px; padding: 20px 5%; width: 150px; margin: 10px; border-radius: 10px;">
+                            <input style="background-color: #008494; position: relative; display: inline-block; " type="radio" id="choice_{{ question.id }}_{{ key }}" 
+                                   name="answer_{{ question.id }}" value="{{ key }}">
+                            <label style="position: relative; display: inline; padding: 5px;" for="choice_{{ question.id }}_{{ key }}">{{ value }}</label>
+                        </div>
+                            {% endfor %}
+                    {% else %}
+                        <input type="text" name="answer_{{ question.id }}" placeholder="Your answer">
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <div style="position: relative; text-align: center; " id="quiz-controls">
+                <style>
+                    /* Chekbox uchun ranglar */
+input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    outline: none;
+    cursor: pointer;
+    vertical-align: middle;
+    position: relative;
+    top: 6px; /* Agar so'z bilan orasida to'g'ri turgan bo'lsa, buni o'zgartiring */
+}
+
+/* Chekbox oq rangi */
+input[type="radio"]:checked::before {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    background-color: #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: 3.3px;
+    left: 3px;
+}
+
+.glow-on-hover {
+    margin: 10px 20px;
+    width: 120px;
+    height: 30px;
+    border: none;
+    outline: none;
+    color: #fff;
+    background: #970707;
+    cursor: pointer;
+    position: relative;
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  text-align: center;
+    z-index: 0;
+    border-radius: 10px;
+}
+
+.glow-on-hover:before {
+    content: '';
+    background: linear-gradient(to right, #ff0000, #002bff, #fff, #002bff, #ff0000);
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px; /* Qo'shilgan qism */
+    bottom: -2px; /* Qo'shilgan qism */
+    background-size: 500%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
+}
+
+
+
+.glow-on-hover:active {
+    color: #000000
+}
+
+.glow-on-hover:active:after {
+    background: transparent;
+}
+
+.glow-on-hover:hover:before {
+    opacity: 1;
+}
+
+.glow-on-hover:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, #002bff, #fff, #002bff);
+
+    background: #17025e;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+
+@keyframes glowing {
+    0% { background-position: 0 0; }
+    50% { background-position: 500% 0; }
+    100% { background-position: 0 0; }
+}
+                </style>
+                <button class="glow-on-hover"  type="button" id="prev-question-button">Previous</button>
+                <button class="glow-on-hover"  type="button" id="next-question-button">Next Question</button>
+                <div style="text-align: center;">
+                    <button class="glow-on-hover" >Submit Answers</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const questions = document.querySelectorAll('.question');
+            let currentQuestionIndex = 0;
+
+            function showCurrentQuestion() {
+                questions.forEach((question, index) => {
+                    question.style.display = index === currentQuestionIndex ? 'block' : 'none';
+                });
+                document.getElementById('submit-button').style.display = currentQuestionIndex === questions.length - 1 ? 'block' : 'none';
+                document.getElementById('prev-question-button').disabled = currentQuestionIndex === 0;
+                document.getElementById('next-question-button').disabled = currentQuestionIndex === questions.length - 1;
+            }
+
+            document.getElementById('next-question-button').addEventListener('click', function() {
+                if (currentQuestionIndex < questions.length - 1) {
+                    currentQuestionIndex++;
+                    showCurrentQuestion();
+                }
+            });
+
+            document.getElementById('prev-question-button').addEventListener('click', function() {
+                if (currentQuestionIndex > 0) {
+                    currentQuestionIndex--;
+                    showCurrentQuestion();
+                }
+            });
+
+            showCurrentQuestion(); // Show the first question on load
+        });
+    </script>
+</body>
+</html>

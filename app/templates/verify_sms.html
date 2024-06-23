@@ -1,0 +1,89 @@
+{% load static %}  
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login Form</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:600" rel="stylesheet">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<!-- Latest compiled JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+
+
+    <header>
+        <a href="#" class="logo-link">
+            <img src="{% static 'images/it-club-logo.png' %}" alt="Logo" class="logo">
+        </a>
+    </header>
+    
+ 
+    
+    <div class="spotlight-container">
+        <img id="spotlight-image" src="{% static 'images/tech.jpg' %}" alt="Tech Image">
+        <div class="container">
+            <p>UNG IT Club <span class="typed-text"></span><span class="cursor">&nbsp;</span></p>
+        </div> 
+    </div>
+    <script>
+         //Auto typing text function
+         const typedTextSpan = document.querySelector(".typed-text");
+        const cursorSpan = document.querySelector(".cursor");
+        
+        const textArray = ["- yangi g'oyalar", "- yangi loyihalar", "- yangi jamoa", "ga hush kelibsiz!"];
+        const typingDelay = 200;
+        const erasingDelay = 100;
+        const newTextDelay = 2000; // Delay between current and next text
+        let textArrayIndex = 0;
+        let charIndex = 0;
+        
+        function type() {
+          if (charIndex < textArray[textArrayIndex].length) {
+            if(!cursorSpan.classList.contains("typing")) cursorSpan.classList.add("typing");
+            typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
+            charIndex++;
+            setTimeout(type, typingDelay);
+          } 
+          else {
+            cursorSpan.classList.remove("typing");
+              setTimeout(erase, newTextDelay);
+          }
+        }
+        
+        function erase() {
+            if (charIndex > 0) {
+            if(!cursorSpan.classList.contains("typing")) cursorSpan.classList.add("typing");
+            typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex-1);
+            charIndex--;
+            setTimeout(erase, erasingDelay);
+          } 
+          else {
+            cursorSpan.classList.remove("typing");
+            textArrayIndex++;
+            if(textArrayIndex>=textArray.length) textArrayIndex=0;
+            setTimeout(type, typingDelay + 1100);
+          }
+        }
+        
+        document.addEventListener("DOMContentLoaded", function() { // On DOM Load initiate the effect
+          if(textArray.length) setTimeout(type, newTextDelay + 250);
+        });
+        
+       
+    </script>
+    <form style="background-color: #00556b; width: 500px; height: 200px; margin: auto; padding: 30px; border-radius: 10px;" method="post" action="{% url 'verify_sms' %}">
+        <h1>SMS Kodini Kiriting</h1>
+        {% csrf_token %}
+        <div style="text-align: center;  position: relative;"  class="input-wrapper input-group">
+            <input type="text" name="sms_code" placeholder="SMS Kod">
+        </div>
+        <button class="btn btn-light btn-rounded" data-mdb-ripple-init  class="btn btn-white btn-animate" id="submitButton" style="background-color: #fff; border-radius: 8px;size: 10px; position: relative; text-align: center;" type="submit">Kodni Tekshirish</button>
+    </form>
+</body>
+</html>

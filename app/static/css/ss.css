@@ -1,0 +1,412 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+@import url(https://fonts.googleapis.com/css?family=Source+Code+Pro:400);
+
+
+body {
+    background-attachment: fixed;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #333;
+    color: white;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    margin: 0;
+    overflow-x: hidden;
+    height: 100%;
+    margin: 0;
+    overflow-x: hidden;
+
+}
+
+
+.background-image {
+    position: fixed; /* Fix the background image */
+    width: 100%;
+    height: 100%;
+    background-image: url('path/to/your/image.jpg'); /* Update with the correct path */
+    background-size: cover;
+    background-position: center;
+}
+
+
+
+.spotlight-container img {
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+
+#spotlight-image {
+    display: block;
+    width: 100%; 
+    transition: transform 0.5s ease; 
+    transform: scale(1.2); 
+} 
+
+
+
+.input-group {
+    margin-bottom: 10px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px; /* Space below the label */
+    color: #fff;
+}
+
+input[type=text], input[type=email], input[type=tel], input[type=submit] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: #008494;
+    color: white;
+    border-radius: 5px;
+    margin-bottom: 10px; /* Space below each input */
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+
+    font-size: 16px;
+}
+
+input[type=submit] {
+    background: #555;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background: #666;
+}
+
+input:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
+    border-color: #0a6243;
+}
+
+
+
+.input-wrapper input[type="tel"]::placeholder,
+input[type="text"]::placeholder,
+input[type="email"]::placeholder {
+    color: #9cc1cd; /* Placeholder text color */
+    opacity: 1; /* Override any browser-specific opacity to ensure consistent color */
+}
+
+
+
+.input-wrapper {
+    display: flex;
+    align-items: center; /* This will vertically align the children in the middle */
+    background: #008494;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.input-wrapper span {
+    padding: 10px;
+    background: #007183;
+    border-radius: 5px 0 0 5px;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+.input-wrapper input[type="tel"] {
+    flex-grow: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    margin: 0; /* Ensure there's no additional margin pushing it down */
+    color: white;
+    background: transparent;
+    line-height: normal; /* Reset line-height to ensure vertical alignment */
+}
+
+
+.btn,
+.btn:link,
+.btn:visited {
+    position: relative;
+    box-sizing: border-box;
+    text-align: center;
+    color: #00556b;
+    width: 100%;
+    text-decoration: none;
+    padding: 10px;
+    display: inline-block;
+    border-radius: 5px;
+    transition: all .2s;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn-white {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #fff;
+    font-size: 1.5vh;
+    color: #777;
+}
+
+.btn::after {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    border-radius: 8px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: all .4s;
+}
+
+.btn-white::after {
+    background-color: #fff;
+}
+
+button.btn:focus {
+    outline: none;
+}
+
+
+.main-container {
+    display: flex;
+    padding-top: 80px !important;
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+
+
+.centered-form {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    max-width: 500px; /* Increase max-width as needed */
+    width: 70%; /* You can adjust this percentage based on your design needs */
+    margin: auto; 
+
+}
+
+
+.form-container {
+    padding: 30px; 
+    background: #00556b;
+    border-radius: 8px;
+    box-sizing: border-box; 
+    margin: auto;
+    width: 90%; /* Adjust based on your design, but ensure it's not 100% to account for padding */
+    max-width: 500px; 
+}
+
+
+.form-container h2 {
+    text-align: center;
+}
+
+
+@media (max-width: 768px) {
+    .main-container {
+        flex-direction: column; /* Stack vertically on mobile */
+        align-items: center;
+        padding-top: 80px !important;
+
+    }
+
+    .centered-form, .container {
+        width: 90%;
+        max-width: none;
+        top: 58%;
+    }
+
+    .form-container {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        margin-top: 15%;
+    }
+
+
+    .btn-white {
+        font-size: 16px;
+    }
+}
+
+
+.container {
+    position: absolute;
+    top: 8%;
+    left: 50%;
+    transform: translate(-50%, -10%);
+    width: 80%;
+    text-align: center;
+    z-index: 1;
+}
+
+
+.container p {
+    font-size: 2rem;
+    font-weight: bolder;
+    color: white;
+}
+
+
+
+@media (min-width: 768px) {
+    .container {
+        text-align: center; 
+        top: 10%;
+    }
+
+    .container p {
+        font-size: 5rem;
+    }
+}
+
+
+  .container p span.typed-text {
+    font-weight: normal;
+    color: #00FF38;
+  }
+  .container p span.cursor {
+    display: inline-block;
+    background-color: #ccc;
+    margin-left: 0.1rem;
+    width: 3px;
+    animation: blink 1s infinite;
+  }
+  .container p span.cursor.typing {
+    animation: none;
+  }
+  @keyframes blink {
+    0%  { background-color: #ccc; }
+    49% { background-color: #ccc; }
+    50% { background-color: transparent; }
+    99% { background-color: transparent; }
+    100%  { background-color: #ccc; }
+  }
+
+
+  .success {
+    color: #28a745; /* Green for success */
+    background-color: #dff0d8;
+    border-color: #d4edda;
+    text-align: center;
+    font-weight: bolder;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.error {
+    color: #dc3545; /* Red for error */
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    text-align: center;
+    font-weight: bolder;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.message {
+    animation: fadeIn 1s ease-out;
+}
+
+
+header {
+    position: fixed; /* Fixed position */
+    top: 0; /* Align to the top */
+    left: 0; /* Align to the left */
+    width: 100%; /* Full width */
+    z-index: 1000; /* Ensure it's above other content */
+    background: transparent; /* Optional: depends on your design */
+}
+
+.logo-link {
+    display: inline-block; /* Inline block for the link */
+    padding: 60px; /* Add some padding around the logo */
+}
+
+.logo {
+    height: 100px; /* Example height, adjust based on your logo */
+    width: auto; /* Maintain aspect ratio */
+}
+
+@media (max-width: 600px) {
+    .logo {
+        height: 60px;
+    }
+
+    .logo-link {
+        padding: 10px; /* Add some padding around the logo */
+    }
+
+}
+
+
+
+.href {
+    display: block;
+    text-align: end;
+    color: #008494;
+}
+
+
+
+
+/* .login-container {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    text-align: center;
+} */
+
+
+input[id="code"] {
+    width: 40px; /* Kod inputlari uchun */
+}
+
+
+

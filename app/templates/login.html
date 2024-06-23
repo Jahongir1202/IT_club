@@ -1,0 +1,401 @@
+{% load static %}  
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login Form</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.scss' %}">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:600" rel="stylesheet">
+
+
+</head>
+<body>
+
+
+
+    <header>
+        <a href="#" class="logo-link">
+            <img src="{% static 'images/it-club-logo.png' %}" alt="Logo" class="logo">
+        </a>
+    </header>
+    
+ 
+    
+    <div class="spotlight-container">
+        <img id="spotlight-image" src="{% static 'images/tech.jpg' %}" alt="Tech Image">
+        <div class="container">
+            <p>UNG IT Club <span class="typed-text"></span><span class="cursor">&nbsp;</span></p>
+        </div> 
+    </div>
+ 
+
+    <div class="main-container1">
+
+        
+        
+        <div class="centered-form">
+            <div class="form-container1">
+
+                <title>Telefon Raqam Kiriting</title>
+                <style>
+                    /* CSS uslubi inputga stilni qo'shadi */
+                    #phoneInputContainer {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                    }
+                    
+                    #phoneInput {
+                        width: 100%;
+                        height: 2.2rem;
+                        top: 10px;
+                    }
+                </style>
+            </head>
+            <body>
+            
+            <div id="phoneInputContainer">
+                    <div class="input-wrapper input-group">
+                        <span style="height: 1.6rem;">+998</span>
+                        <input style="background-color:darkcyan; margin-bottom: 0px;"  type="text" id="phoneInput" name="phone" pattern="\d{2} \d{3} \d{2} \d{2}" placeholder="XX XXX XX XX" oninput="validateInput()">
+                    </div>
+                <button class="btn btn-white btn-animate" id="submitButton" style="background-color: #fff; margin: 10px; border-radius: 8px;size: 10px;" type="button" onclick="requestSMSCode()" disabled>Yuborish</button>
+            </div>
+            
+            <script>
+                function validateInput() {
+                    var phoneInput = document.getElementById("phoneInput").value;
+                    var submitButton = document.getElementById("submitButton");
+                    // Telefon raqam uzunligi 9 tadan kam bo'lsa yoki bo'sh bo'lsa
+                    if (phoneInput.length < 9 || phoneInput.trim() === "") {
+                        // Tugmani bosilmagan qilib o'zgartirish
+                        submitButton.disabled = true;
+                    } else {
+                        // Aks holda, tugmani bosilgan qilib o'zgartirish
+                        submitButton.disabled = false;
+                    }
+                }
+            </script>
+            
+            <script>
+                function moveFocus(next, current) {
+                    if (current.value.length === 1 && next <= 6) {
+                        document.querySelector(`input[name="code"][maxlength="1"][oninput="moveFocus(${next + 1}, this)"]`).focus();
+                    }
+            
+                    // Check if all input fields are filled
+                    var allInputsFilled = true;
+                    document.querySelectorAll('.code_view').forEach(function(input) {
+                        if (input.value.length !== 1) {
+                            allInputsFilled = false;
+                        }
+                    });
+            
+                    // If all input fields are filled, trigger form submission
+                    if (allInputsFilled) {
+                        document.querySelector('form').submit();
+                    }
+                }
+            </script>
+           
+            
+            
+            <div id="codeInputContainer"  style="display: none;">
+                <input  type="text" class="iphone_password"  pattern="\d{2} \d{2} \d{2} " placeholder="XX XX XX XX" oninput="validateInput()">
+                <!-- <script style="display: none;">
+                    function validateInput() {
+                        var input = document.querySelector('.iphone_password');
+                        var regex = /^\d{2} \d{2} \d{2}$/; // 6 xonali son uchun regular ifoda
+                        if (!regex.test(input.value)) {
+                            input.setCustomValidity('Faqatgina 6 xonali son kiritishingiz kerak');
+                        } else {
+                            input.setCustomValidity('print(hello)');
+                        }
+                    }
+                </script> -->
+                
+
+                <!-- <form method="POST" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    <input style="position: relative; display: inline; width: 15%;" class="code_view" type="text" maxlength="1" oninput="moveFocus(2, this)" autofocus>
+                    <input style="position: relative; display: inline; width: 15%;" class="code_view" type="text" maxlength="1" oninput="moveFocus(3, this)" >
+                    <input style="position: relative; display: inline; width: 15%;" class="code_view" type="text" maxlength="1" oninput="moveFocus(4, this)" >
+                    <input style="position: relative; display: inline; width: 15%;" class="code_view" type="text" maxlength="1" oninput="moveFocus(5, this)">
+                    <input style="position: relative; display: inline; width: 15%;" class="code_view" type="text" maxlength="1" oninput="moveFocus(6, this)"> 
+                    <input style="position: relative; display: inline; width: 15%;" class="code_view" type="text" name="code" maxlength="1" oninput="moveFocus(6, this)" >
+                    <button type="submit">Kirish</button>
+                </form>
+            </div> -->
+            
+                    
+
+                
+
+
+                <a href="{% url 'register' %}" class="href">
+                    Ro'yxatdan o'tish
+                </a>
+
+                <div id="message-container"></div> <!-- Container for messages -->
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+
+        //Image parallax effect
+            document.addEventListener('DOMContentLoaded', function() {
+            const img = document.getElementById('spotlight-image');
+        
+            document.addEventListener('mousemove', function(e) {
+                const { clientX, clientY } = e;
+                const screenWidth = window.innerWidth;
+                const screenHeight = window.innerHeight;
+        
+                const moveX = (clientX - screenWidth / 2) * 0.05; // Reduced movement
+                const moveY = (clientY - screenHeight / 2) * 0.05;
+                img.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.1)`;
+        
+            });
+        });
+        
+        
+        
+        //Auto typing text function
+        const typedTextSpan = document.querySelector(".typed-text");
+        const cursorSpan = document.querySelector(".cursor");
+        
+        const textArray = ["- yangi g'oyalar", "- yangi loyihalar", "- yangi jamoa", "ga hush kelibsiz!"];
+        const typingDelay = 200;
+        const erasingDelay = 100;
+        const newTextDelay = 2000; // Delay between current and next text
+        let textArrayIndex = 0;
+        let charIndex = 0;
+        
+        function type() {
+          if (charIndex < textArray[textArrayIndex].length) {
+            if(!cursorSpan.classList.contains("typing")) cursorSpan.classList.add("typing");
+            typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
+            charIndex++;
+            setTimeout(type, typingDelay);
+          } 
+          else {
+            cursorSpan.classList.remove("typing");
+              setTimeout(erase, newTextDelay);
+          }
+        }
+        
+        function erase() {
+            if (charIndex > 0) {
+            if(!cursorSpan.classList.contains("typing")) cursorSpan.classList.add("typing");
+            typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex-1);
+            charIndex--;
+            setTimeout(erase, erasingDelay);
+          } 
+          else {
+            cursorSpan.classList.remove("typing");
+            textArrayIndex++;
+            if(textArrayIndex>=textArray.length) textArrayIndex=0;
+            setTimeout(type, typingDelay + 1100);
+          }
+        }
+        
+        document.addEventListener("DOMContentLoaded", function() { // On DOM Load initiate the effect
+          if(textArray.length) setTimeout(type, newTextDelay + 250);
+        });
+        
+        
+        
+        //Phone number check function
+        const phoneInput = document.getElementById('phoneInput');
+        
+        phoneInput.addEventListener('input', (event) => {
+            let input = event.target.value.replace(/\D/g, ''); // Remove all non-digit characters
+            let formattedInput = '';
+        
+            // Add spaces after 2 digits, then after 3 digits, then after 2 digits
+            if (input.length > 2) {
+                formattedInput += input.substring(0, 2) + ' ';
+                input = input.substring(2);
+            }
+            if (input.length > 3) {
+                formattedInput += input.substring(0, 3) + ' ';
+                input = input.substring(3);
+            }
+            if (input.length > 2) {
+                formattedInput += input.substring(0, 2) + ' ';
+                input = input.substring(2);
+            }
+            formattedInput += input; // Append the rest of the input
+        
+            event.target.value = formattedInput.substring(0, 12); // Limit to 12 characters (9 digits plus 3 spaces)
+        });
+        
+        
+        
+        
+        
+        
+        //Pop up messages function
+        document.getElementById('myForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+        
+            const formData = new FormData(this);
+            const messageContainer = document.getElementById('message-container');
+        
+
+            if (messageContainer) {
+                messageContainer.innerHTML = `<p class="error message">${data.error}</p>`;
+                messageContainer.style.display = 'block';
+            } else {
+                console.error('messageContainer elementi topilmadi');
+            }
+
+
+        
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                let messageClass = data.success ? 'success' : 'error';
+                messageContainer.innerHTML = `<p class="${messageClass} message">${data.message}</p>`;
+                messageContainer.style.display = 'block';
+                if (data.success) {
+                    document.getElementById('myForm').style.display = 'none';
+                }
+        
+            })
+            .catch(error => {
+                console.error('Error during form submission:', error);
+                messageContainer.innerHTML = `<p class="error message">An error occurred while submitting the form.</p>`;
+                messageContainer.style.display = 'block';
+        
+        
+            });
+        });
+        
+        
+        
+        
+        
+        
+        
+    function requestSMSCode() {
+    const phoneInputContainer = document.getElementById('phoneInputContainer');
+    const messageContainer = document.getElementById('message-container');
+    const phone = document.getElementById('phoneInput').value;
+
+    if (!phoneInputContainer) {
+        console.error('phoneInputContainer element is not found in the DOM');
+        return;
+    }
+
+    fetch('/generate-code/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: JSON.stringify({ phone: phone })
+    })
+    .then(response => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.json();
+    })
+    .then(data => {
+        if (data.error) {
+            messageContainer.innerHTML = `<p class="error message">${data.error}</p>`;
+            messageContainer.style.display = 'block';
+        } else {
+            phoneInputContainer.style.display = 'none';
+            document.getElementById('codeInputContainer').style.display = 'block';
+            messageContainer.innerHTML = `<p class="success message">${data.message}</p>`;
+            messageContainer.style.display = 'block';
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        messageContainer.innerHTML = `<p class="error message">An error occurred while processing your request.</p>`;
+        messageContainer.style.display = 'block';
+    });
+}
+
+        
+
+
+
+        
+        
+        
+
+        
+        
+        
+        
+        function moveFocus(nextInputIndex, element) {
+            if (element.value.length === 1) {
+                const nextInput = document.querySelector(`input[type='text']:nth-child(${nextInputIndex + 1})`);
+                if (nextInput) {
+                    nextInput.focus();
+                }
+            }
+        }
+        
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }   
+            }
+            return cookieValue;
+        }
+        
+        const csrftoken = getCookie('csrftoken');
+        
+        
+        
+        
+        
+        
+        
+        </script>
+        
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

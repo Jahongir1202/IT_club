@@ -1,0 +1,110 @@
+{% load static %}  
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login Form</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:600" rel="stylesheet">
+
+    <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+        <!-- Latest compiled JavaScript -->
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+
+
+    <header>
+        <a href="#" class="logo-link">
+            <img src="{% static 'images/it-club-logo.png' %}" alt="Logo" class="logo">
+        </a>
+    </header>
+    
+ 
+    
+    <div class="spotlight-container">
+        <img id="spotlight-image" src="{% static 'images/tech.jpg' %}" alt="Tech Image">
+        <div  class="container">
+            <p>UNG IT Club <span class="typed-text"></span><span class="cursor">&nbsp;</span></p>
+        </div> 
+    </div>
+    <script>
+         //Auto typing text function
+         const typedTextSpan = document.querySelector(".typed-text");
+        const cursorSpan = document.querySelector(".cursor");
+        
+        const textArray = ["- yangi g'oyalar", "- yangi loyihalar", "- yangi jamoa", "ga hush kelibsiz!"];
+        const typingDelay = 200;
+        const erasingDelay = 100;
+        const newTextDelay = 2000; // Delay between current and next text
+        let textArrayIndex = 0;
+        let charIndex = 0;
+        
+        function type() {
+          if (charIndex < textArray[textArrayIndex].length) {
+            if(!cursorSpan.classList.contains("typing")) cursorSpan.classList.add("typing");
+            typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
+            charIndex++;
+            setTimeout(type, typingDelay);
+          } 
+          else {
+            cursorSpan.classList.remove("typing");
+              setTimeout(erase, newTextDelay);
+          }
+        }
+        
+        function erase() {
+            if (charIndex > 0) {
+            if(!cursorSpan.classList.contains("typing")) cursorSpan.classList.add("typing");
+            typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex-1);
+            charIndex--;
+            setTimeout(erase, erasingDelay);
+          } 
+          else {
+            cursorSpan.classList.remove("typing");
+            textArrayIndex++;
+            if(textArrayIndex>=textArray.length) textArrayIndex=0;
+            setTimeout(type, typingDelay + 1100);
+          }
+        }
+        
+        document.addEventListener("DOMContentLoaded", function() { // On DOM Load initiate the effect
+          if(textArray.length) setTimeout(type, newTextDelay + 250);
+        });
+        
+       
+    </script>
+    
+    
+    <form style="background-color: #00556b; width: 500px; height: 200px; margin: auto; padding: 30px; border-radius: 10px;" method="post" action="{% url 'send_sms' %}">
+        {% csrf_token %}
+        <!-- <h1 style=" font-size: 1.5rem; text-align: center; position: relative; bottom: 20px; color: #fff;">Telefon Raqamini Kiriting</h1> -->
+        <div class="input-group">
+            <label for="phone">Telefon raqam:</label>
+
+            <div style="    position: relative;
+            height: 35px;" class="input-wrapper input-group">
+                <span>+998</span>
+                <input style="    position: relative;
+                top: -33px;
+                margin: 0px 30px;
+                height: 34px;
+                left: 30px;"  type="tel" id="phone" name="phone" pattern="\d{2} \d{3} \d{2} \d{2}" placeholder="XX XXX XX XX" required>
+            </div>
+
+        </div>
+        <!-- <div style="text-align: center;  position: relative;"  class="input-wrapper input-group">
+            <span style="height: 1.6rem;">+998</span>
+            <input style="position: relative;
+            top: -36px;
+            margin: 0px 50px;
+            height: 41px; "  type="text" id="phoneInput" name="phone" pattern="\d{2} \d{3} \d{2} \d{2}" placeholder="XX XXX XX XX" oninput="validateInput()">        
+        </div> -->
+        <button class="btn btn-light btn-rounded" data-mdb-ripple-init id="submitButton" style="background-color: #fff; border-radius: 8px;size: 10px; position: relative; text-align: center;" type="submit">SMS Yuborish</button>
+
+    </form>
+</body>
+</html>
